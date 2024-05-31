@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WallList</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Menu hamburguesa -->
+    <div id="sidebar">
+        <button id="closeSidebar">×</button>
+        <h2>Categorías</h2>
+        <ul id="categoriesList">
+            <!-- Ejemplo de una categoría -->
+            <li>
+                <span class="category-name">Nombre de la Categoría</span>
+
+            </li>
+        </ul>
+        <button id="addCategory">Añadir Categoría</button>
+        <button id="importData">Importar Datos</button>
+        <button id="exportData">Exportar Datos</button>
+        <button id="resetData">Formatear Datos</button>
+    </div>
+    
+    <button id="openSidebar">☰</button>
+
+    <!-- Área principal -->
+    <div id="main">
+        <h1 id="currentCategory">General</h1>
+        <div id="cardsContainer"></div>
+        <button id="addCard" class="floating-button">+</button>
+    </div>
+    
+    <!-- Modal para crear/editar tarjetas -->
+    <div id="cardModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modalTitle">Crear Tarjeta</h2>
+            <form id="cardForm">
+                <input type="text" id="cardTitle" placeholder="Título" required>
+                <textarea id="cardDescription" placeholder="Descripción"></textarea>
+                <input type="text" id="cardLink" placeholder="Enlace (@url)" required>
+                <input type="text" id="cardImage" placeholder="URL de imagen/icono">
+                <button type="submit">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para confirmaciones -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <p id="confirmMessage"></p>
+            <input type="number" id="confirmInput" placeholder="Ingrese la suma de 3 dígitos">
+            <button id="confirmButton">Confirmar</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
