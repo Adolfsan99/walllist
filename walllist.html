@@ -19,11 +19,13 @@
     <!-- Menu hamburguesa -->
     <div id="sidebar">
         <button id="closeSidebar">✖︎</button>
-        <div class="none"><h1>📌Walllist</h1></div>
+        <div class="none"><a href="javascript:void(0);" onclick="window.location.href=window.location.href"><h1>📌Walllist</h1></a></div>
         <button id="addCategory">✨Añadir categoria</button>
-        <button id="exportData">💾Exportar datos</button>
         <button id="importData">📲Importar datos</button>
+        <button id="exportData">💾Exportar datos</button>
+        <button id="exportCSV">🗂️Exportar como CSV</button>
         <button id="resetData">🧹Limpiar datos</button>
+        <button id="goToTodo">✅Todo.html</button>
         <h2>Categorías</h2>
         <ul id="categoriesList">
             <!-- Ejemplo de una categoría -->
@@ -32,6 +34,8 @@
 
             </li>
         </ul>
+        <div class="none"><h2>Creado por: <a>Adolfo Sánchez</a></h2></div>
+        <div class="none">‎ </div>
     </div>
     
     <button id="openSidebar">☰</button>
@@ -49,10 +53,10 @@
             <span class="close-modal">&times;</span>
             <h2 id="modalTitle">Crear Tarjeta</h2>
             <form id="cardForm">
-                <input type="text" id="cardTitle" placeholder="Título" required>
-                <textarea id="cardDescription" style="width: 100%; height: 100px;" placeholder="Descripción"></textarea>
-                <input type="text" id="cardLink" placeholder="Enlace (@url)" required>
-                <input type="text" id="cardImage" placeholder="URL de imagen/icono">
+                <input type="text" id="cardTitle" style="width: 100%; height: 20px; margin-bottom: 8px; border-radius: 5px;" placeholder="Título" required>
+                <textarea id="cardDescription" style="width: 100%; height: 100px; margin-bottom: 8px; border-radius: 5px;" placeholder="Descripción"></textarea>
+                <input type="text" id="cardLink" style="width: 100%; height: 20px; margin-bottom: 8px; border-radius: 5px;" placeholder="Enlace (@url)" required>
+                <input type="text" id="cardImage" style="width: 100%; height: 20px; margin-bottom: 8px; border-radius: 5px;" placeholder="URL de imagen/icono">
                 <button type="submit" style="margin-top: 20px;">Guardar</button>
             </form>
         </div>
@@ -66,6 +70,12 @@
             <input type="number" id="confirmInput" placeholder="Ingrese la suma de 3 dígitos">
             <button id="confirmButton">Confirmar</button>
         </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+div>
     </div>
 
     <script src="script.js"></script>
