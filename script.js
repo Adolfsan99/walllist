@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+/*document.addEventListener('DOMContentLoaded', () => {
     // Tu código existente aquí
 
     // Función para exportar datos
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
-        a.download = 'data.json';
+        a.download = 'My Walllist.json';
         document.body.appendChild(a);
         a.click();
         URL.revokeObjectURL(url);
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Tu código existente aquí
 });
-
+*/
 
 
 
@@ -61,7 +61,7 @@ const renderCategories = () => {
 
         // Agregar botón de editar
         const editButton = document.createElement('button');
-        editButton.textContent = '✏️';
+        editButton.textContent = '📝';
         editButton.classList.add('edit-category');
         editButton.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -71,7 +71,7 @@ const renderCategories = () => {
 
         // Agregar botón de eliminar
         const deleteButton = document.createElement('button');
-        deleteButton.textContent = '🗑️';
+        deleteButton.textContent = '❌';
         deleteButton.classList.add('delete-category');
         deleteButton.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -111,7 +111,7 @@ const renderCards = () => {
             <p>${card.description}</p>
             ${card.image ? `<img src="${card.image}" alt="${card.title}">` : ''}
             <button class="edit-card">✏️</button>
-            <button class="delete-card">🗑️</button>
+            <button class="delete-card">❌</button>
         `;
 
         if (card.link.startsWith('@')) {
@@ -194,7 +194,7 @@ const renderCards = () => {
     };
 
     openSidebarButton.addEventListener('click', () => {
-        sidebar.style.display = 'block';
+        sidebar.style.display = 'grid';
     });
 
     closeSidebarButton.addEventListener('click', () => {
@@ -248,7 +248,7 @@ const renderCards = () => {
 // Botón para importar datos
 const importDataButton = document.getElementById('importData');
 importDataButton.addEventListener('click', () => {
-    alert('Haz clic en "Seleccionar archivo" para importar datos.');
+    //alert('Haz clic en "Seleccionar archivo" para importar datos.');
 
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
@@ -279,7 +279,7 @@ importDataButton.addEventListener('click', () => {
 // Botón para exportar datos
 const exportDataButton = document.getElementById('exportData');
 exportDataButton.addEventListener('click', () => {
-    alert('Haz clic en "Aceptar" para exportar los datos.');
+    //alert('Haz clic en "Aceptar" para exportar los datos.');
 
     const dataToExport = {
         categories: categories,
@@ -289,10 +289,22 @@ exportDataButton.addEventListener('click', () => {
     const blob = new Blob([JSON.stringify(dataToExport)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
 
+    // Obtener la fecha y hora actual
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Los meses en JavaScript son 0-indexados
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+
+    // Formatear la fecha y hora en el formato "dd-mm-yyyy hh.mm"
+    const formattedDate = `${day}-${month}-${year} ${hours}.${minutes}`;
+    const filename = `My Walllist - ${formattedDate}.json`;
+
     const a = document.createElement('a');
     a.style.display = 'none';
     a.href = url;
-    a.download = 'data.json';
+    a.download = filename;
     document.body.appendChild(a);
     a.click();
     URL.revokeObjectURL(url);
@@ -300,6 +312,7 @@ exportDataButton.addEventListener('click', () => {
 
     alert('Datos exportados correctamente.');
 });
+
 
 // Botón para formatear datos
 const resetDataButton = document.getElementById('resetData');
