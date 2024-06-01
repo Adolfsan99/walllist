@@ -1,35 +1,37 @@
-/*document.addEventListener('DOMContentLoaded', () => {
-    // Tu código existente aquí
+checkLocalStorageUsage()
 
-    // Función para exportar datos
-    const exportData = () => {
-        const dataToExport = {
-            categories: categories,
-            cards: cards
-        };
+function checkLocalStorageUsage() {
+    var total = 0;
+    for (var i = 0; i < localStorage.length; i++) {
+      var key = localStorage.key(i);
+      var value = localStorage.getItem(key);
+      total += (key.length + value.length) * 2; // Cada carácter en UTF-16 ocupa 2 bytes
+    }
+    // Tamaño total del Local Storage permitido por el navegador (generalmente alrededor de 5 MB a 10 MB)
+    var totalAllowed = (1024 * 1024 * 5); // Por ejemplo, 5 MB
+  
+    // Convertir bytes a megabytes (MB)
+    var totalUsedMB = (total / (1024 * 1024)).toFixed(2);
+    var totalAllowedMB = (totalAllowed / (1024 * 1024)).toFixed(2);
+  
+    // Calcular el espacio disponible
+    var availableSpaceMB = (totalAllowedMB - totalUsedMB).toFixed(2);
+  
+    if (totalUsedMB >= (totalAllowedMB * 0.9)) { // Si se ha utilizado más del 90% del espacio permitido
+      alert("¡Atención! Has utilizado " + totalUsedMB + " MB de un total de " + totalAllowedMB + " MB en el Local Storage. Quedan disponibles " + availableSpaceMB + " MB.");
+    } else {
+      console.log("Espacio utilizado en el LocalStorage: " + totalUsedMB + "/" + totalAllowedMB + "MBs");
+      console.log("Espacio disponible en el LocalStorage: " + availableSpaceMB + " MB");
+    }
+  }
 
-        const blob = new Blob([JSON.stringify(dataToExport)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = 'My Walllist.json';
-        document.body.appendChild(a);
-        a.click();
-        URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-    };
-
-    // Event listener para el botón de exportar datos
-    const exportDataButton = document.getElementById('exportData');
-    exportDataButton.addEventListener('click', exportData);
-
-    // Tu código existente aquí
-});
-*/
-
-
+function exitFunction() {
+    var ubicacionActual = window.location.origin;
+    // Agregar la ruta o el nombre del archivo que deseas
+    var nuevaUbicacion = ubicacionActual + "/miniprograma/todo.html";
+    // Redirigir a la nueva ubicación
+    window.location.href = nuevaUbicacion;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     let categories = JSON.parse(localStorage.getItem('categories')) || ['General'];
@@ -52,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalTitle = document.getElementById('modalTitle');
     
     let editCardIndex = null;
-
+/*
 // Dentro de la función renderCategories
 const renderCategories = () => {
     categoriesList.innerHTML = '';
@@ -78,6 +80,52 @@ const renderCategories = () => {
             deleteCategory(category, index);
         });
         li.appendChild(deleteButton);
+
+        // Agregar nombre de la categoría
+        const categoryText = document.createElement('span');
+        categoryText.textContent = category;
+        li.appendChild(categoryText);
+
+        // Agregar el evento click para cambiar la categoría
+        li.addEventListener('click', () => {
+            currentCategory = category;
+            localStorage.setItem('currentCategory', currentCategory);
+            currentCategoryTitle.textContent = currentCategory;
+            renderCards();
+            sidebar.style.display = 'none';
+        });
+
+        categoriesList.appendChild(li);
+    });
+};
+*/
+const renderCategories = () => {
+    categoriesList.innerHTML = '';
+    categories.forEach((category, index) => {
+        const li = document.createElement('li');
+
+        // Verificar si la categoría es "General"
+        if (category !== 'General') {
+            // Agregar botón de editar
+            const editButton = document.createElement('button');
+            editButton.textContent = '📝';
+            editButton.classList.add('edit-category');
+            editButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                editCategory(category, index);
+            });
+            li.appendChild(editButton);
+
+            // Agregar botón de eliminar
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = '❌';
+            deleteButton.classList.add('delete-category');
+            deleteButton.addEventListener('click', (event) => {
+                event.stopPropagation();
+                deleteCategory(category, index);
+            });
+            li.appendChild(deleteButton);
+        }
 
         // Agregar nombre de la categoría
         const categoryText = document.createElement('span');
@@ -313,7 +361,6 @@ exportDataButton.addEventListener('click', () => {
     alert('Datos exportados correctamente.');
 });
 
-
 // Botón para formatear datos
 const resetDataButton = document.getElementById('resetData');
 resetDataButton.addEventListener('click', () => {
@@ -328,14 +375,6 @@ resetDataButton.addEventListener('click', () => {
         alert('Datos restablecidos correctamente.');
     }
 });
-
-
-
-
-
-
-
-
 
     renderCategories();
     renderCards();
