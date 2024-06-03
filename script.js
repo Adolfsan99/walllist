@@ -278,6 +278,19 @@ document.addEventListener('DOMContentLoaded', () => {
         searchCards(searchQuery);
     });
 
+
+        // Función para agregar una nueva categoría
+        document.getElementById('addCategory').addEventListener('click', () => {
+            const categoryName = prompt('Ingrese el nombre de la categoría:');
+            if (categoryName && !categories.includes(categoryName)) {
+                categories.push(categoryName);
+                cards[categoryName] = [];
+                saveData();
+                renderCategories();
+            }
+        });
+
+
     const importDataButton = document.getElementById('importData');
     importDataButton.addEventListener('click', () => {
         const fileInput = document.createElement('input');
