@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Walllist</title>
     <script>
@@ -12,12 +12,12 @@
         });
     </script>
 
-    <link rel="icon" type="image/x-icon" href="favicon.png" />
-    <link rel="stylesheet" href="styles.css">
-</head>
+    
+    
+<link rel="icon" type="image/x-icon" href="favicon.png"><link rel="stylesheet" href="styles.css"></head>
 <body>
     <!-- Menu hamburguesa -->
-    <div id="sidebar">
+    <div id="sidebar" style="display: none;">
         <button id="closeSidebar">✖︎</button>
         <div class="none"><a href="javascript:void(0);" onclick="window.location.href=window.location.href"><h1>📌Walllist</h1></a></div>
         <button id="addCategory">✨Añadir categoria</button>
@@ -27,13 +27,7 @@
         <button id="resetData">🧹Limpiar datos</button>
         <button onclick="exitFunction()">✅Todo.html</button>
         <h2>Categorías</h2>
-        <ul id="categoriesList">
-            <!-- Ejemplo de una categoría -->
-            <li>
-                <span class="category-name">Nombre de la Categoría</span>
-
-            </li>
-        </ul>
+        <ul id="categoriesList"><li><button class="edit-category">☰</button><button class="delete-category">❌</button><span>👤Cuentas</span></li><li><button class="edit-category">☰</button><button class="delete-category">❌</button><span>👦🏽Datos personales</span></li><li><button class="edit-category">☰</button><button class="delete-category">❌</button><span>💼Trabajo</span></li><li><button class="edit-category">☰</button><button class="delete-category">❌</button><span>❔Otros</span></li><li><button class="edit-category">☰</button><button class="delete-category">❌</button><span>🎮Videojuegos</span></li><li><button class="edit-category">☰</button><button class="delete-category">❌</button><span>👁️‍🗨️Para ver</span></li></ul>
         <div class="none"><h2>Creado por: <a>Adolfo Sánchez</a></h2></div>
         <div class="none">‎ </div>
     </div>
@@ -43,29 +37,33 @@
     <!-- Área principal -->
     <div id="main">
         <h1 id="currentCategory">General</h1>
+        <div class="search">
+            <div><input type="text" id="searchInput" style="background-color: transparent;width:100%;height:32px;color: lightyellow;" placeholder="Busca tu tarjeta por título..."></div>
+            <div><button id="searchButton">Buscar</button></div>
+        </div>
         <div id="cardsContainer"></div>
         <button id="addCard" class="floating-button">+</button>
     </div>
     
     <!-- Modal para crear/editar tarjetas -->
-    <div id="cardModal" class="modal">
+    <div id="cardModal" class="modal" style="display: none;">
         <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2 id="modalTitle">Crear Tarjeta</h2>
+            <span class="close-modal">×</span>
+            <h2 id="modalTitle">Crear tarjeta</h2>
             <form id="cardForm">
-                <input type="text" id="cardTitle" style="width: 100%; height: 20px; margin-bottom: 8px; border-radius: 5px;" placeholder="Título" required>
-                <textarea id="cardDescription" style="width: 100%; height: 100px; margin-bottom: 8px; border-radius: 5px;" placeholder="Descripción"></textarea>
-                <input type="text" id="cardLink" style="width: 100%; height: 20px; margin-bottom: 8px; border-radius: 5px;" placeholder="Enlace (@url)" required>
-                <input type="text" id="cardImage" style="width: 100%; height: 20px; margin-bottom: 8px; border-radius: 5px;" placeholder="URL de imagen/icono">
+                <input type="text" id="cardTitle" style="width: 100%; height: 20px; margin-bottom: 8px; border-radius: 5px; border: none" placeholder="Título" required="">
+                <textarea id="cardDescription" style="width: 100%; height: 100px; margin-bottom: 8px; border-radius: 5px; border: none" placeholder="Descripción"></textarea>
+                <input type="text" id="cardLink" style="width: 100%; height: 20px; margin-bottom: 8px; border-radius: 5px; border: none" placeholder="Enlace (@url)" required="">
+                <input type="text" id="cardImage" style="width: 100%; height: 20px; margin-bottom: 8px; border-radius: 5px; border: none" placeholder="URL de imagen/icono">
                 <button type="submit" style="margin-top: 20px;">Guardar</button>
             </form>
         </div>
     </div>
 
     <!-- Modal para confirmaciones -->
-    <div id="confirmModal" class="modal">
+    <div id="confirmModal" class="modal" style="display: none;">
         <div class="modal-content">
-            <span class="close-modal">&times;</span>
+            <span class="close-modal">×</span>
             <p id="confirmMessage"></p>
             <input type="number" id="confirmInput" placeholder="Ingrese la suma de 3 dígitos">
             <button id="confirmButton">Confirmar</button>
@@ -73,7 +71,4 @@
     </div>
 
     <script src="script.js"></script>
-</body>
-</html>
-</body>
-</html>
+    </div></body></html>
