@@ -1,3 +1,38 @@
+// Función para verificar el uso del Local Storage
+function checkLocalStorageUsage() {
+    var total = 0;
+    for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        var value = localStorage.getItem(key);
+        total += (key.length + value.length) * 2; // Cada carácter en UTF-16 ocupa 2 bytes
+    }
+    // Tamaño total del Local Storage permitido por el navegador (generalmente alrededor de 5 MB a 10 MB)
+    var totalAllowed = (1024 * 1024 * 5); // Por ejemplo, 5 MB
+
+    // Convertir bytes a megabytes (MB)
+    var totalUsedMB = (total / (1024 * 1024)).toFixed(2);
+    var totalAllowedMB = (totalAllowed / (1024 * 1024)).toFixed(2);
+
+    // Calcular el espacio disponible
+    var availableSpaceMB = (totalAllowedMB - totalUsedMB).toFixed(2);
+
+    if (totalUsedMB >= (totalAllowedMB * 0.9)) { // Si se ha utilizado más del 90% del espacio permitido
+        alert("¡Atención! Has utilizado " + totalUsedMB + " MB de un total de " + totalAllowedMB + " MB en el Local Storage. Quedan disponibles " + availableSpaceMB + " MB.");
+    } else {
+        console.log("Espacio utilizado en el LocalStorage: " + totalUsedMB + "/" + totalAllowedMB + "MBs");
+        console.log("Espacio disponible en el LocalStorage: " + availableSpaceMB + " MB");
+    }
+}
+
+// Función para redireccionar a una nueva ubicación
+function exitFunction() {
+    var ubicacionActual = window.location.origin;
+    // Agregar la ruta o el nombre del archivo que deseas
+    var nuevaUbicacion = ubicacionActual + "/miniprograma/todo.html";
+    // Redirigir a la nueva ubicación
+    window.location.href = nuevaUbicacion;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     let categories = JSON.parse(localStorage.getItem('categories')) || ['General'];
     let currentCategory = 'General';
