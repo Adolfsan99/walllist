@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h3>${card.title}</h3>
                 <p>${card.description}</p>
                 ${card.image ? `<img src="${card.image}" alt="${card.title}">` : ''}
-                <button class="edit-card">${index + 1}</button>
+                <button class="number-card">${index + 1}</button>
                 <button class="edit-card">☰</button>
                 <button class="delete-card">❌</button>
             `;
@@ -132,16 +132,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
+            // Evento para abrir el modal de edición y mostrar la tarjeta actual para edición
             cardElement.querySelector('.edit-card').addEventListener('click', (e) => {
                 e.stopPropagation();
                 editCardIndex = index;
-                modalTitle.textContent = 'Editar Tarjeta';
+                modalTitle.textContent = 'Editar tarjeta';
                 cardForm.cardTitle.value = card.title;
-                cardForm.cardDescription.value = card.description;
                 cardForm.cardLink.value = card.link;
+                cardForm.cardDescription.value = card.description;
                 cardForm.cardImage.value = card.image;
                 cardModal.style.display = 'flex';
+
+                // Llama a toggleEyeIconVisibility después de abrir el modal
+                toggleEyeIconVisibility();
             });
+
 
             cardElement.querySelector('.delete-card').addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -420,19 +425,3 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCategories();
     renderCards();
 });
-
-function toggleVisibility() {
-    var input = document.getElementById('hiddenInput');
-    var eyeIcon = document.getElementById('eyeIcon');
-  
-    if (input.type === 'password') {
-      input.type = 'text';
-      eyeIcon.classList.remove('fa-eye');
-      eyeIcon.classList.add('fa-eye-slash');
-    } else {
-      input.type = 'password';
-      eyeIcon.classList.remove('fa-eye-slash');
-      eyeIcon.classList.add('fa-eye');
-    }
-  }
-  
