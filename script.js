@@ -112,12 +112,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h3>${card.title}</h3>
                 <p>${card.description}</p>
                 ${card.image ? `<img src="${card.image}" alt="${card.title}">` : ''}
-                <button>${index + 1}</button>
+                <button class="edit-card">${index + 1}</button>
                 <button class="edit-card">☰</button>
                 <button class="delete-card">❌</button>
             `;
 
-            if (card.link.startsWith('@')) {
+            if (card.link.startsWith('@') || card.link.startsWith(' @')) {
                 cardElement.addEventListener('click', () => {
                     const confirmOpen = confirm('¿Estás seguro de que deseas abrir esta tarjeta?');
                     if (confirmOpen) {
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     addCardButton.addEventListener('click', () => {
         editCardIndex = null;
-        modalTitle.textContent = 'Crear Tarjeta';
+        modalTitle.textContent = 'Crear tarjeta';
         cardForm.reset();
         cardModal.style.display = 'flex';
     });
@@ -420,3 +420,19 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCategories();
     renderCards();
 });
+
+function toggleVisibility() {
+    var input = document.getElementById('hiddenInput');
+    var eyeIcon = document.getElementById('eyeIcon');
+  
+    if (input.type === 'password') {
+      input.type = 'text';
+      eyeIcon.classList.remove('fa-eye');
+      eyeIcon.classList.add('fa-eye-slash');
+    } else {
+      input.type = 'password';
+      eyeIcon.classList.remove('fa-eye-slash');
+      eyeIcon.classList.add('fa-eye');
+    }
+  }
+  

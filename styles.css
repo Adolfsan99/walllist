@@ -168,7 +168,7 @@ h3 {
     box-sizing: border-box;
     transition: transform 0.3s ease-in-out 0s, box-shadow 0.3s ease 0s;
     position: relative;
-    display: block;
+    display: inline-table;
     word-break: break-word;
     z-index: auto;
 }
@@ -186,14 +186,15 @@ h3 {
 }
 
 .card button {
+    clip-path: border-box;
     background-color: transparent;
-    border: none;
-    font-size: 20px;
+    font-size: 18px;
     cursor: pointer;
     color: rgb(108, 117, 125);
     transition: color 0.3s ease 0s;
-    margin-top: 20px;
-    display: contents;
+    display: inline;
+    border-radius: 15px;
+    margin: 8px;
 }
 
 .card button:hover {
@@ -211,7 +212,22 @@ button {
     transition: background-color 0.3s ease 0s, transform 0.3s ease 0s;
 }
 
+button.card{
+    margin-left: 20px;
+}
+
 .edit-category, .delete-category {
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.edit-card, .delete-card {
     background-color: transparent;
     color: white;
     border: none;
@@ -258,6 +274,44 @@ p {
     color: black;
 }
 
+
+
+
+
+
+
+
+
+
+.input-container {
+    position: relative;
+  }
+  
+  #toggleVisibilityButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+  }
+  
+  #eyeIcon {
+    font-size: 1.2em;
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media only screen and (max-width: 600px) {
     #main {
         padding: 10px;
@@ -270,3 +324,4 @@ p {
     width: auto;
 }
 }
+
