@@ -156,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 confirmMessage.textContent = `¿Estás seguro de que quieres eliminar la tarjeta '${card.title}'? ${num1} + ${num2} para confirmar`;
                 confirmModal.style.display = 'flex';
-                confirmModal.style.color = 'white';
 
                 confirmButton.onclick = () => {
                     if (parseInt(confirmInput.value) === correctSum) {

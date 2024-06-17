@@ -21,10 +21,10 @@
         <button id="closeSidebar">✖︎</button>
         <div class="none"><a href="javascript:void(0);" onclick="window.location.href=window.location.href"><h1>📌Walllist</h1></a></div>
         <button id="addCategory">✨Añadir categoria</button>
-        <button id="importData">📲Importar datos</button>
         <button id="exportData">💾Exportar datos</button>
         <button id="exportCSV">🗂️Exportar datos en CSV</button>
-        <button id="resetData">🧹Limpiar datos</button>
+        <button id="importData">📲Importar datos</button>
+        <button id="resetData">🧹Borrar datos</button>
         <button onclick="exitFunction()">✅Todo.html</button>
         <h2>Categorías</h2>
         <ul id="categoriesList"><li><button class="edit-category">☰</button><button class="delete-category">❌</button><span>👤Cuentas</span></li><li><button class="edit-category">☰</button><button class="delete-category">❌</button><span>👦🏽Datos personales</span></li><li><button class="edit-category">☰</button><button class="delete-category">❌</button><span>💼Trabajo</span></li><li><button class="edit-category">☰</button><button class="delete-category">❌</button><span>❔Otros</span></li><li><button class="edit-category">☰</button><button class="delete-category">❌</button><span>🎮Videojuegos</span></li><li><button class="edit-category">☰</button><button class="delete-category">❌</button><span>👁️‍🗨️Para ver</span></li></ul>
@@ -64,7 +64,7 @@
     <div id="confirmModal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close-modal">×</span>
-            <p id="confirmMessage"></p>
+            <p style="color: white; width: 82%;"id="confirmMessage"></p>
             <input type="number" id="confirmInput" placeholder="Ingrese la suma de 3 dígitos">
             <button id="confirmButton">Confirmar</button>
         </div>
