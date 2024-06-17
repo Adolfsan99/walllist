@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 cardForm.cardDescription.value = card.description;
                 cardForm.cardImage.value = card.image;
                 cardModal.style.display = 'flex';
-
+                cardModal.style.color = 'white';
                 // Llama a toggleEyeIconVisibility después de abrir el modal
                 toggleEyeIconVisibility();
             });
@@ -251,6 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modalTitle.textContent = 'Crear tarjeta';
         cardForm.reset();
         cardModal.style.display = 'flex';
+        cardModal.style.color = 'white';
     });
 
     cardForm.addEventListener('submit', (event) => {
