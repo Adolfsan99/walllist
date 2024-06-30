@@ -29,12 +29,7 @@
                 <h1>📌Walllist</h1>
             </a></div>
         <div class="buttoncontainer">
-            <button class="utils" id="addCategory">✨Añadir categoria</button>
-            <button class="utils" id="exportData">💾Exportar datos</button>
-            <button class="utils" id="exportCSV">🗂️Exportar datos en CSV</button>
-            <button class="utils" id="importData">📲Importar datos</button>
-            <button class="utils" id="resetData">🧹Borrar datos</button>
-            <button class="utils" onclick="exitFunction()">✅Todo.html</button>
+
         </div>
         <h2>Categorías</h2>
         <ul id="categoriesList">
@@ -51,10 +46,7 @@
             <li><button class="edit-category">☰</button><button class="delete-category">❌</button><span>👁️‍🗨️Para
                     ver</span></li>
         </ul>
-        <div class="none">
-            <h2>Creado por: <a href="https://github.com/Adolfsan99">Adolfo Sánchez</a></h2>
-        </div>
-        <div class="none">‎ </div>
+
     </div>
 
     <button id="openSidebar">☰</button>
@@ -66,49 +58,58 @@
             <div><input type="text" id="searchInput"
                     style="background-color: transparent;width:100%;height:32px;color: lightyellow;"
                     placeholder="Busca tu tarjeta por título..."></div>
-            <div class="searchbuttons"><button id="searchButton">Buscar</button><button
-                    onclick="location.reload()">Actualizar</button></div>
+            <div class="searchbuttons"><button id="searchButton">🔎Buscar</button><button
+                    onclick="location.reload()">✨Actualizar</button>
+                <button class="utils" id="addCategory">🆕Añadir categoria</button>
+                <button class="utils" id="exportData">💾Exportar datos</button>
+                <button class="utils" id="exportCSV">🗂️Exportar datos en CSV</button>
+                <button class="utils" id="importData">📲Importar datos</button>
+                <button class="utils" id="resetData">🧹Borrar datos</button>
+                <button class="utils" onclick="exitFunction()">✅Todo.html</button>
+            </div>
         </div>
         <div id="cardsContainer"></div>
         <button id="addCard" class="floating-button">+</button>
     </div>
-
-    <!-- Modal para crear/editar tarjetas -->
-    <div id="cardModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close-modal">❌</span>
-            <h2 id="modalTitle">Crear tarjeta</h2>
-            <form id="cardForm">
-                <input type="text" id="cardTitle"
-                    style="width: 100%; height: 20px; margin-bottom: 8px; border-radius: 5px; border: none"
-                    placeholder="Título" required="">
-                <textarea type="text" id="cardLink"
-                    style="width: 100%; height: 50px; margin-bottom: 8px; border-radius: 5px; border: none"
-                    placeholder="Contenido o enlace (@url)" required=""></textarea><i id="eyeIcon"
-                    class="fa fa-eye eye-icon"></i>
-                <textarea id="cardDescription"
-                    style="width: 100%; height: 100px; margin-bottom: 8px; border-radius: 5px; border: none"
-                    placeholder="Descripción (Opcional)"></textarea>
-                <input type="text" id="cardImage"
-                    style="width: 100%; height: 20px; margin-bottom: 8px; border-radius: 5px; border: none"
-                    placeholder="URL de imagen/icono (Opcional)">
-                <button type="submit" style="margin-top: 20px;">Guardar</button>
-            </form>
+    <footer class="none" style="    text-align: center; padding: 1rem;">
+        <a href="https://github.com/Adolfsan99">Creado por: Adolfo Sánchez</a>
+        </foote>
+        <!-- Modal para crear/editar tarjetas -->
+        <div id="cardModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-modal">❌</span>
+                <h2 id="modalTitle">Crear tarjeta</h2>
+                <form id="cardForm">
+                    <input type="text" id="cardTitle"
+                        style="width: 100%; height: 20px; margin-bottom: 8px; border-radius: 5px; border: none"
+                        placeholder="Título" required="">
+                    <textarea type="text" id="cardLink"
+                        style="width: 100%; height: 50px; margin-bottom: 8px; border-radius: 5px; border: none"
+                        placeholder="Contenido o enlace (@url)" required=""></textarea><i id="eyeIcon"
+                        class="fa fa-eye eye-icon"></i>
+                    <textarea id="cardDescription"
+                        style="width: 100%; height: 100px; margin-bottom: 8px; border-radius: 5px; border: none"
+                        placeholder="Descripción (Opcional)"></textarea>
+                    <input type="text" id="cardImage"
+                        style="width: 100%; height: 20px; margin-bottom: 8px; border-radius: 5px; border: none"
+                        placeholder="URL de imagen/icono (Opcional)">
+                    <button type="submit" style="margin-top: 20px;">Guardar</button>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <!-- Modal para confirmaciones -->
-    <div id="confirmModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close-modal">❌</span>
-            <p style="color: white; width: 82%;" id="confirmMessage"></p>
-            <input type="number" id="confirmInput" placeholder="Ingrese la suma de 3 dígitos">
-            <button id="confirmButton">Confirmar</button>
+        <!-- Modal para confirmaciones -->
+        <div id="confirmModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-modal">❌</span>
+                <p style="color: white; width: 82%;" id="confirmMessage"></p>
+                <input type="number" id="confirmInput" placeholder="Ingrese la suma de 3 dígitos">
+                <button id="confirmButton">Confirmar</button>
+            </div>
         </div>
-    </div>
 
-    <script src="script.js"></script>
-    </div>
+        <script src="script.js"></script>
+        </div>
 </body>
 
 </html>
