@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo.html</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Detecta el idioma preferido del navegador
+            const userLang = navigator.language || navigator.userLanguage;
+            // Asigna el idioma detectado al atributo 'lang' del elemento <html>
+            document.documentElement.lang = userLang;
+        });
+    </script>
+    <link rel="stylesheet" href="./styles/todo.css">
+    <link rel="icon" type="image/x-icon" href="favicon.png" />
+</head>
+
+<body>
+
+
+    <div class="app">
+        <div class="todo">
+            <button type="button" class="button-plain" onclick="verTareasCompletadas()">
+                <h1>✅Todo.html<div id="clock"></div>
+                    <div id="status"></div>
+                </h1>
+            </button>
+        </div>
+        <div class="box1">
+            <button type="button" class="button-plain" onclick="verOCrearTarea()">
+                <div class="chart-container" id="chart-container">
+                    <!-- Las barras se generarán aquí dinámicamente -->
+                </div>
+            </button>
+            <textarea id="textbox" style="border-radius: 15px; padding: 15px;" rows="10" cols="50"
+                placeholder="Escribe algo aquí..."></textarea>
+        </div>
+        <div class="box1">
+            <button onclick="verOCrearTarea()">
+                <p>📝</p>Ver/crear tareas
+            </button>
+            <button onclick="editarTarea()">
+                <p>✏️</p>Gestionar tareas
+            </button>
+            <button onclick="actualizarTareas()">
+                <p>🪄</p>Actualizar tareas
+            </button>
+            <button onclick="verOCrearRutina()">
+                <p>🔃</p>Ver/crear rutina
+            </button>
+            <button onclick="aleatorio()">
+                <p>🎲</p>Generar n° aleatorio
+            </button>
+            <button onclick="porcentaje()">
+                <p>📊</p>Calcular porcentaje
+            </button>
+        </div>
+        <div class="box2">
+            <button onclick="comoUsar()">
+                <p>❓</p>Guía de usuario
+            </button>
+            <button onclick="walllist()">
+                <p>📌</p>Walllist
+            </button>
+            <button onclick="textToHtml()">
+                <p>✒️</p>TextTo.html
+            </button>
+            <button onclick="exportarDatos()">
+                <p>💾</p>Exportar datos
+            </button>
+            <button onclick="importarDatos()">
+                <p>📥</p>Importar datos
+            </button>
+            <button onclick="borrarDatos()">
+                <p>🗑️</p>Formatear datos
+            </button>
+        </div>
+        <div class="box3">
+
+
+        </div>
+
+        <div class="creditos">
+            <a href="https://github.com/Adolfsan99">Creado por: Adolfo Sánchez</a>
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // El '0' debe ser '12'
+            const periodEmoji = getPeriodEmoji(now.getHours()); // Pasamos las horas en formato de 24 horas
+            const timeString = `${periodEmoji} ${hours}:${minutes}:${seconds} ${ampm}`;
+            document.getElementById('clock').textContent = timeString;
+        }
+
+        function getPeriodEmoji(hours) {
+            if (hours >= 5 && hours < 12) {
+                return '🌅'; // Mañana
+            } else if (hours >= 12 && hours < 18) {
+                return '🌄'; // Tarde
+            } else if (hours >= 18 && hours < 23) {
+                return '🌉'; // Noche
+            } else {
+                return '🌠'; // Madrugada
+            }
+        }
+
+
+        setInterval(updateClock, 1000);
+        updateClock();  // Llamada inicial para establecer el reloj inmediatamente
+    </script>
+    <script>
+        const textbox = document.getElementById('textbox');
+        const statusDiv = document.getElementById('status');
+        let timeout = null;
+
+        // Cargar contenido de localStorage al iniciar la página
+        window.onload = () => {
+            const savedNote = localStorage.getItem('nota');
+            if (savedNote) {
+                textbox.value = savedNote;
+            }
+        };
+
+        // Guardar contenido en localStorage después de 5 segundos de inactividad
+        textbox.addEventListener('input', () => {
+            statusDiv.textContent = '⌛Esperando texto';
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                localStorage.setItem('nota', textbox.value);
+                statusDiv.textContent = '✅¡Texto guardado!';
+
+                // Desaparecer el mensaje después de 3 segundos
+                setTimeout(() => {
+                    statusDiv.textContent = '';
+                }, 3000);
+            }, 4000);
+        });
+
+    </script>
+
+</body>
+
+</html>
