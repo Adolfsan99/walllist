@@ -95,15 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Añade botones de edición y eliminación si la categoría no es "General"
         if (category !== "General") {
-          const editButton = document.createElement("button");
-          editButton.textContent = "☰";
-          editButton.classList.add("edit-category");
-          editButton.addEventListener("click", (event) => {
-            event.stopPropagation();
-            editCategory(category, index);
-          });
-          li.appendChild(editButton);
-
           const deleteButton = document.createElement("button");
           deleteButton.textContent = "❌";
           deleteButton.classList.add("delete-category");
@@ -112,6 +103,15 @@ document.addEventListener("DOMContentLoaded", () => {
             deleteCategory(category, index);
           });
           li.appendChild(deleteButton);
+
+          const editButton = document.createElement("button");
+          editButton.textContent = "☰";
+          editButton.classList.add("edit-category");
+          editButton.addEventListener("click", (event) => {
+            event.stopPropagation();
+            editCategory(category, index);
+          });
+          li.appendChild(editButton);
         }
 
         // Añade el texto de la categoría como un elemento span dentro del li
@@ -198,7 +198,8 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         const title = document.createElement("h2");
-        title.textContent = "Contenido de la tarjeta";
+        title.textContent = `${card.title}`;
+        title.style.padding = "0rem 2.5rem";
 
         const content = document.createElement("div");
         content.classList.add("custom-modal-content");
