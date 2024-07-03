@@ -161,20 +161,12 @@ document.addEventListener("DOMContentLoaded", () => {
             "¿Estás seguro de que deseas abrir esta tarjeta?"
           );
           if (confirmOpen) {
-            const username = card.link.substring(1).trim(); // Elimina el "@" y espacios en blanco al inicio
-            window.open(`https://example.com/${username}`, "_blank"); // Reemplaza example.com con tu dominio real
+            const contentlink = card.link.substring(1).trim(); // Elimina el "@" y espacios en blanco al inicio
+            window.open(`${contentlink}`, "_blank");
           }
         });
       } else if (card.link.startsWith("v/") || card.link.startsWith(" v/")) {
-        card.link = card.link.replace(/^\s*v\//, "");
-
         cardElement.addEventListener("click", () => {
-          /*const confirmOpen = confirm(
-            "¿Estás seguro de que deseas ver esta tarjeta?"
-          );
-          if (confirmOpen) {
-
-          }      */
           const cardContent = card.link.trim();
           mostrarContenidoTarjeta(cardContent);
         });
@@ -206,13 +198,20 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         const title = document.createElement("h2");
-        // title.classList.add("modal-title");
-        // title.textContent = "Contenido de la tarjeta";
+        title.textContent = "Contenido de la tarjeta";
 
         const content = document.createElement("div");
         content.classList.add("custom-modal-content");
         content.style.whiteSpace = "pre-wrap"; // Esta línea permite que se respeten los saltos de línea
-        content.textContent = cardContent;
+
+        // Verificar si cardContent comienza con "v/"
+        if (cardContent.startsWith("v/")) {
+          // Obtener el contenido después de "v/"
+          const contenido = cardContent.substring(2); // Obtiene el texto después de los primeros dos caracteres ("v/")
+          content.textContent = contenido;
+        } else {
+          content.textContent = cardContent;
+        }
 
         modalContent.appendChild(closeButton);
         modalContent.appendChild(title);
