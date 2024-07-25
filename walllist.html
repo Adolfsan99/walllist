@@ -25,16 +25,16 @@
     <!-- Menu hamburguesa -->
     <div id="sidebar" style="display: none;">
         <button id="closeSidebar">✖︎</button>
-        <div class="none"><a href="javascript:void(0);" onclick="window.location.href=window.location.href">
-                <h1>📌Walllist</h1>
-            </a></div>
+        <div class="none">
+            <h1 onclick="window.location.href=window.location.href">📌Walllist</h1>
+        </div>
         <div class="buttoncontainer">
             <button class="utils" onclick="exitFunction()">✅Todo.html</button>
+            <button class="utils" onclick="aleatorio()">🎲Generar n° Aleatorio</button>
             <button class="utils" id="exportData">💾Exportar datos</button>
             <button class="utils" id="importData">📲Importar datos</button>
             <button class="utils" id="exportCSV">🗂️Exportar datos en CSV</button>
             <button class="utils" id="resetData">🧹Limpiar datos</button>
-
         </div>
         <h2 style="padding:0px; margin-top:1rem; margin-bottom:0rem">Categorías</h2>
         <ul id="categoriesList">

@@ -52,6 +52,20 @@ function exitFunction() {
   window.location.href = nuevaUbicacion;
 }
 
+function aleatorio() {
+  numero = prompt(
+    "Ingresa un numero\n*El numero aleatorio se calculará entre 1 y el numero ingresado."
+  );
+
+  // Verificar si el usuario presionó "Cancelar" o ingresó un valor no válido
+  if (numero === null || isNaN(numero)) {
+    alert("⚠️Ingresa un valor numérico válido para el rango inicial.");
+    return;
+  }
+
+  alert(`🎲El número aleatorio es ${Math.floor(Math.random() * numero + 1)}`);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   let categories = JSON.parse(localStorage.getItem("categories")) || [
     "General",
