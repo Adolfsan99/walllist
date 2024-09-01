@@ -1,0 +1,592 @@
+<html><head><base href="https://websimapp.com/pinterest-clone/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebSim Pinterest Clone - Categorías y Tarjetas Avanzadas</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    height: 100%;
+    background-color: #f5f5f5;
+  }
+  #app {
+    display: flex;
+    height: 100vh;
+  }
+  .sidebar {
+    width: 300px;
+    background-color: #ffffff;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    left: -300px;
+    height: 100%;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+  .sidebar.open {
+    left: 0;
+  }
+  .sidebar-content {
+    padding: 20px;
+  }
+  .main-content {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+  }
+  .main-content.sidebar-open {
+    margin-left: 300px;
+  }
+  .category {
+    margin-bottom: 10px;
+  }
+  .category-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  .category-toggle {
+    cursor: pointer;
+    margin-right: 5px;
+    width: 20px;
+    text-align: center;
+  }
+  .category-name {
+    cursor: pointer;
+    flex-grow: 1;
+  }
+  .category-buttons button {
+    margin-left: 5px;
+    padding: 2px 5px;
+    font-size: 12px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  .category-buttons button:hover {
+    background-color: #e0e0e0;
+  }
+  .subcategories {
+    margin-left: 20px;
+  }
+  .search-bar {
+    width: calc(100% - 64px);
+    padding: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  .breadcrumb {
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #666;
+  }
+  .breadcrumb span {
+    cursor: pointer;
+  }
+  .breadcrumb span:hover {
+    text-decoration: underline;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    cursor: pointer;
+    position: relative;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transform: translateY(-5px);
+  }
+  .card-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  .card-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 18px;
+  }
+  .card-description {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  .card-id {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    padding: 2px 5px;
+    font-size: 0.8em;
+    border-radius: 3px;
+  }
+  .card-buttons {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .card:hover .card-buttons {
+    opacity: 1;
+  }
+  .card-buttons button {
+    margin-left: 5px;
+    padding: 2px 5px;
+    font-size: 12px;
+    background-color: rgba(255,255,255,0.8);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  .card-buttons button:hover {
+    background-color: rgba(255,255,255,1);
+  }
+  .add-card-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  .add-card-button:hover {
+    background-color: #45a049;
+    transform: scale(1.1);
+  }
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+  }
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 400px;
+    max-width: 90%;
+  }
+  .modal-content input, .modal-content textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .modal-content button {
+    padding: 8px 15px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+  }
+  .modal-content button:first-of-type {
+    background-color: #4CAF50;
+    color: white;
+  }
+  .modal-content button:first-of-type:hover {
+    background-color: #45a049;
+  }
+  .modal-content button:last-of-type {
+    background-color: #f44336;
+    color: white;
+  }
+  .modal-content button:last-of-type:hover {
+    background-color: #d32f2f;
+  }
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    max-width: 80%;
+    max-height: 80%;
+    overflow-y: auto;
+    z-index: 1002;
+  }
+  .hamburger-menu {
+    font-size: 30px;
+    cursor: pointer;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1001;
+    transition: left 0.3s ease;
+  }
+  .hamburger-menu.open {
+    left: 310px;
+  }
+  .top-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .top-buttons button {
+    padding: 8px 15px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  .top-buttons button:hover {
+    background-color: #e0e0e0;
+  }
+  .current-path {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+    margin-left: 32px;
+  }
+  .main-content-wrapper {
+    padding-left: 32px;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="hamburger-menu" :class="{ 'open': sidebarOpen }" @click="toggleSidebar">☰</div>
+  
+  <div class="sidebar" :class="{ 'open': sidebarOpen }">
+    <div class="sidebar-content">
+      <div class="top-buttons">
+        <button>Botón 1</button>
+        <button>Botón 2</button>
+      </div>
+      <h2>Categorías</h2>
+      <button @click="showAddCategoryModal = true">Agregar Categoría</button>
+      <div v-for="category in topLevelCategories" :key="category.id">
+        <category-item :category="category" :all-categories="categories" @select="selectCategory"></category-item>
+      </div>
+    </div>
+  </div>
+  
+  <div class="main-content" :class="{ 'sidebar-open': sidebarOpen }">
+    <div class="main-content-wrapper">
+      <div class="current-path">
+        Ruta actual: {{ currentPath }}
+      </div>
+      
+      <input type="text" class="search-bar" v-model="searchQuery" placeholder="Buscar tarjetas...">
+      
+      <div class="breadcrumb">
+        <span v-for="(category, index) in breadcrumb" :key="index">
+          <span @click="selectCategory(category)">{{ category.name }}</span>
+          <span v-if="index < breadcrumb.length - 1"> > </span>
+        </span>
+      </div>
+      
+      <div class="card-grid">
+        <div v-for="card in filteredCards" :key="card.id" class="card" @click="handleCardClick(card)">
+          <div class="card-buttons">
+            <button @click.stop="editCard(card)">Editar</button>
+            <button @click.stop="deleteCard(card)">Eliminar</button>
+          </div>
+          <img v-if="card.imageUrl" :src="card.imageUrl" :alt="card.title" class="card-image">
+          <div class="card-title">{{ card.title }}</div>
+          <div v-if="card.description" class="card-description">{{ card.description }}</div>
+          <span class="card-id">ID: {{ card.id }}</span>
+        </div>
+      </div>
+      <button class="add-card-button" @click="showAddCardModal = true">+</button>
+    </div>
+  </div>
+
+  <!-- Modales -->
+  <div v-if="showAddCategoryModal" class="modal">
+    <div class="modal-content">
+      <h2>Agregar Categoría</h2>
+      <input v-model="newCategory.name" placeholder="Nombre de la categoría">
+      <button @click="addCategory">Agregar</button>
+      <button @click="showAddCategoryModal = false">Cancelar</button>
+    </div>
+  </div>
+
+  <div v-if="showEditCategoryModal" class="modal">
+    <div class="modal-content">
+      <h2>Editar Categoría</h2>
+      <input v-model="editingCategory.name" placeholder="Nombre de la categoría">
+      <button @click="updateCategory">Guardar</button>
+      <button @click="showEditCategoryModal = false">Cancelar</button>
+    </div>
+  </div>
+
+  <div v-if="showAddCardModal" class="modal">
+    <div class="modal-content">
+      <h2>Agregar Tarjeta</h2>
+      <input v-model="newCard.title" placeholder="Título">
+      <textarea v-model="newCard.content" placeholder="Contenido"></textarea>
+      <input v-model="newCard.description" placeholder="Descripción (opcional)">
+      <input v-model="newCard.imageUrl" placeholder="URL de la imagen (opcional)">
+      <button @click="addCard">Agregar</button>
+      <button @click="showAddCardModal = false">Cancelar</button>
+    </div>
+  </div>
+
+  <div v-if="showEditCardModal" class="modal">
+    <div class="modal-content">
+      <h2>Editar Tarjeta</h2>
+      <input v-model="editingCard.title" placeholder="Título">
+      <textarea v-model="editingCard.content" placeholder="Contenido"></textarea>
+      <input v-model="editingCard.description" placeholder="Descripción (opcional)">
+      <input v-model="editingCard.imageUrl" placeholder="URL de la imagen (opcional)">
+      <button @click="updateCard">Guardar</button>
+      <button @click="showEditCardModal = false">Cancelar</button>
+    </div>
+  </div>
+
+  <div v-if="showPopup" class="popup">
+    <h2>{{ popupCard.title }}</h2>
+    <p>{{ popupCard.content.slice(2) }}</p>
+    <button @click="showPopup = false">Cerrar</button>
+  </div>
+</div>
+
+<script>
+Vue.component('category-item', {
+  props: ['category', 'allCategories'],
+  template: `
+    <div class="category">
+      <div class="category-item">
+        <span class="category-toggle" @click="toggleCategory">
+          {{ hasChildren ? (category.expanded ? '▼' : '►') : '&nbsp;&nbsp;' }}
+        </span>
+        <span class="category-name" @click="$emit('select', category)">{{ category.name }}</span>
+        <div class="category-buttons">
+          <button @click.stop="addSubcategory">+</button>
+          <button @click.stop="editCategory">Editar</button>
+          <button @click.stop="deleteCategory">Eliminar</button>
+        </div>
+      </div>
+      <div v-if="category.expanded" class="subcategories">
+        <category-item 
+          v-for="subcategory in subcategories" 
+          :key="subcategory.id" 
+          :category="subcategory"
+          :all-categories="allCategories"
+          @select="$emit('select', $event)"
+        ></category-item>
+      </div>
+    </div>
+  `,
+  computed: {
+    subcategories() {
+      return this.allCategories.filter(c => c.parentId === this.category.id);
+    },
+    hasChildren() {
+      return this.subcategories.length > 0;
+    }
+  },
+  methods: {
+    toggleCategory() {
+      if (this.hasChildren) {
+        this.$set(this.category, 'expanded', !this.category.expanded);
+      }
+    },
+    addSubcategory() {
+      this.$root.addSubcategory(this.category);
+    },
+    editCategory() {
+      this.$root.editCategory(this.category);
+    },
+    deleteCategory() {
+      this.$root.deleteCategory(this.category);
+    }
+  }
+});
+
+new Vue({
+  el: '#app',
+  data: {
+    categories: [
+      { id: 1, name: 'Personal', parentId: null, expanded: false },
+      { id: 2, name: 'Viajes', parentId: 1, expanded: false },
+      { id: 3, name: 'Hobbies', parentId: 1, expanded: false },
+    ],
+    cards: [
+      { id: 1, title: 'Viaje a París', content: 'v/Planear viaje a París en primavera', description: 'Ideas para el viaje', imageUrl: 'https://example.com/paris.jpg', categoryId: 2 },
+      { id: 2, title: 'Fotografía', content: '@https://learn-photography.com', description: 'Recursos para aprender', categoryId: 3 },
+    ],
+    currentCategoryId: null,
+    searchQuery: '',
+    showAddCategoryModal: false,
+    showEditCategoryModal: false,
+    showAddCardModal: false,
+    showEditCardModal: false,
+    showPopup: false,
+    newCategory: { name: '', parentId: null },
+    editingCategory: null,
+    newCard: { title: '', content: '', description: '', imageUrl: '' },
+    editingCard: null,
+    popupCard: null,
+    sidebarOpen: false,
+  },
+  computed: {
+    topLevelCategories() {
+      return this.categories.filter(c => c.parentId === null);
+    },
+    currentCategory() {
+      return this.categories.find(c => c.id === this.currentCategoryId);
+    },
+    breadcrumb() {
+      const result = [];
+      let category = this.currentCategory;
+      while (category) {
+        result.unshift(category);
+        category = this.categories.find(c => c.id === category.parentId);
+      }
+      return result;
+    },
+    filteredCards() {
+      return this.cards.filter(card => {
+        const inCurrentCategory = this.currentCategory && 
+          (card.categoryId === this.currentCategory.id || 
+           this.isDescendantCategory(card.categoryId, this.currentCategory.id));
+        const matchesSearch = card.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                              card.description.toLowerCase().includes(this.searchQuery.toLowerCase());
+        return inCurrentCategory && matchesSearch;
+      });
+    },
+    currentPath() {
+      return this.breadcrumb.map(category => category.name).join(' > ');
+    }
+  },
+  methods: {
+    toggleSidebar() {
+      this.sidebarOpen = !this.sidebarOpen;
+    },
+    selectCategory(category) {
+      this.currentCategoryId = category.id;
+    },
+    addCategory() {
+      const newId = Math.max(...this.categories.map(c => c.id), 0) + 1;
+      this.categories.push({
+        id: newId,
+        name: this.newCategory.name,
+        parentId: this.newCategory.parentId,
+        expanded: false
+      });
+      this.showAddCategoryModal = false;
+      this.newCategory = { name: '', parentId: null };
+    },
+    addSubcategory(parentCategory) {
+      this.newCategory = { name: '', parentId: parentCategory.id };
+      this.showAddCategoryModal = true;
+    },
+    editCategory(category) {
+      this.editingCategory = { ...category };
+      this.showEditCategoryModal = true;
+    },
+    updateCategory() {
+      const index = this.categories.findIndex(c => c.id === this.editingCategory.id);
+      if (index !== -1) {
+        this.$set(this.categories, index, this.editingCategory);
+      }
+      this.showEditCategoryModal = false;
+    },
+    deleteCategory(category) {
+      if (confirm(`¿Estás seguro de que quieres eliminar la categoría "${category.name}" y todas sus subcategorías y tarjetas?`)) {
+        this.categories = this.categories.filter(c => c.id !== category.id && c.parentId !== category.id);
+        this.cards = this.cards.filter(card => card.categoryId !== category.id);
+      }
+    },
+    addCard() {
+      const newId = Math.max(...this.cards.map(c => c.id), 0) + 1;
+      this.cards.push({
+        id: newId,
+        title: this.newCard.title,
+        content: this.newCard.content,
+        description: this.newCard.description,
+        imageUrl: this.newCard.imageUrl,
+        categoryId: this.currentCategoryId
+      });
+      this.showAddCardModal = false;
+      this.newCard = { title: '', content: '', description: '', imageUrl: '' };
+    },
+    editCard(card) {
+      this.editingCard = { ...card };
+      this.showEditCardModal = true;
+    },
+    updateCard() {
+      const index = this.cards.findIndex(c => c.id === this.editingCard.id);
+      if (index !== -1) {
+        this.$set(this.cards, index, this.editingCard);
+      }
+      this.showEditCardModal = false;
+    },
+    deleteCard(card) {
+      if (confirm(`¿Estás seguro de que quieres eliminar la tarjeta "${card.title}"?`)) {
+        this.cards = this.cards.filter(c => c.id !== card.id);
+      }
+    },
+    handleCardClick(card) {
+      if (card.content.startsWith('@')) {
+        window.open(card.content.slice(1), '_blank');
+      } else if (card.content.startsWith('v/')) {
+        this.popupCard = card;
+        this.showPopup = true;
+      } else {
+        navigator.clipboard.writeText(card.content)
+          .then(() => alert('Contenido copiado al portapapeles'))
+          .catch(err => console.error('Error al copiar:', err));
+      }
+    },
+    isDescendantCategory(categoryId, ancestorId) {
+      let category = this.categories.find(c => c.id === categoryId);
+      while (category) {
+        if (category.id === ancestorId) return true;
+        category = this.categories.find(c => c.id === category.parentId);
+      }
+      return false;
+    }
+  }
+});
+</script>
+</body>
+</html>
